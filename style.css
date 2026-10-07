@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+
+:root {
+  --bg: #08080a;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.32);
+  --text: #ffffff;
+  --muted: #8f8f96;
+  --heading: "Outfit", Arial, sans-serif;
+  --body: "Outfit", Arial, Helvetica, sans-serif;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  line-height: 1.7;
+}
+
+/* ---------- Moving squares background ---------- */
+.squares {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  list-style: none;
+  background: linear-gradient(180deg, #1a1a1d 0%, #0b0b0d 45%, #050506 100%);
+}
+
+.squares li {
+  position: absolute;
+  bottom: -200px;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  animation: float var(--d) ease-in-out infinite;
+  animation-delay: var(--w);
+}
+
+/* every other square is outlined only, like the menu page */
+.squares li:nth-child(even) {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+}
+
+.squares li:nth-child(1)  { --x: 5%;  --s: 50px;  --d: 18s; --w: 0s;  }
+.squares li:nth-child(2)  { --x: 15%; --s: 90px;  --d: 26s; --w: 4s;  }
+.squares li:nth-child(3)  { --x: 25%; --s: 30px;  --d: 14s; --w: 8s;  }
+.squares li:nth-child(4)  { --x: 35%; --s: 70px;  --d: 22s; --w: 1s;  }
+.squares li:nth-child(5)  { --x: 45%; --s: 110px; --d: 30s; --w: 6s;  }
+.squares li:nth-child(6)  { --x: 55%; --s: 40px;  --d: 16s; --w: 10s; }
+.squares li:nth-child(7)  { --x: 65%; --s: 80px;  --d: 24s; --w: 3s;  }
+.squares li:nth-child(8)  { --x: 75%; --s: 26px;  --d: 12s; --w: 7s;  }
+.squares li:nth-child(9)  { --x: 85%; --s: 100px; --d: 28s; --w: 2s;  }
+.squares li:nth-child(10) { --x: 92%; --s: 55px;  --d: 20s; --w: 9s;  }
+.squares li:nth-child(11) { --x: 40%; --s: 34px;  --d: 15s; --w: 12s; }
+.squares li:nth-child(12) { --x: 70%; --s: 60px;  --d: 21s; --w: 5s;  }
+
+@keyframes float {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translate(40px, -65vh) rotate(120deg); }
+  90%  { opacity: 1; }
+  100% { transform: translate(-30px, -130vh) rotate(240deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .squares li { animation: none; bottom: 20%; opacity: 0.5; }
+}
+
+/* ---------- Header and navigation ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 28px;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  font-family: var(--heading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.nav a {
+  padding: 8px 16px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav a:hover { color: var(--text); background: var(--surface-hover); }
+.nav a.active { color: #000; background: #fff; }
+
+/* ---------- Main content ---------- */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 50px 22px;
+}
+
+h1, h2, h3 { font-family: var(--heading); line-height: 1.25; font-weight: 600; }
+h1 { font-size: clamp(34px, 6vw, 62px); margin-bottom: 18px; letter-spacing: -0.02em; }
+h2 {
+  font-size: clamp(22px, 3.5vw, 30px);
+  margin: 44px 0 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+h3 { font-size: 20px; margin-bottom: 8px; }
+p { color: var(--muted); margin-bottom: 14px; }
+
+/* kept so existing HTML works: highlighted words are now plain white */
+.gradient-text { color: var(--text); }
+
+/* ---------- Hero (home page) ---------- */
+.hero { text-align: center; padding: 80px 10px 50px; }
+.hero p { max-width: 620px; margin: 0 auto 30px; font-size: 19px; }
+.tag {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 6px 16px;
+  font-size: 14px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 13px 28px;
+  margin: 4px;
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #fff;
+  transition: transform 0.2s, background 0.2s, color 0.2s;
+}
+.btn:hover { transform: translateY(-2px); background: #e6e6e8; }
+.btn.outline { background: transparent; color: var(--text); border: 1px solid var(--line-strong); }
+.btn.outline:hover { background: var(--surface-hover); }
+
+/* ---------- Cards ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+  margin-top: 20px;
+}
+
+.card {
+  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s, border-color 0.25s, background 0.25s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--line-strong); background: var(--surface-hover); }
+
+.price { color: var(--text); font-weight: 600; margin-bottom: 0; }
+
+blockquote { color: var(--text); font-style: italic; margin-bottom: 12px; }
+cite { color: var(--muted); font-style: normal; font-weight: 600; }
+
+/* ---------- Services: product cards ---------- */
+.cards.services { grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+.service-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* ---------- About: photo + intro ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+/* small square frame ("cube") on the left, rounded corners */
+.photo-frame {
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  line-height: 0;
+}
+.profile-photo {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  object-position: 50% 38%;
+  border-radius: 12px;
+  display: block;
+}
+.about-grid .card { display: flex; flex-direction: column; justify-content: center; }
+.about-grid .card p:last-child { margin-bottom: 0; }
+
+/* ---------- Lists: divider rows like the menu page ---------- */
+ul.list { list-style: none; margin: 0; color: var(--muted); border-top: 1px solid var(--line); }
+ul.list li { padding: 14px 0; margin: 0; border-bottom: 1px solid var(--line); }
+.card ul.list { margin-top: 12px; }
+
+.card a, ul.list a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+}
+.card a:hover, ul.list a:hover { text-decoration-color: var(--text); }
+
+/* ---------- Footer (not fixed, never covers content) ---------- */
+.footer {
+  padding: 24px 18px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  border-top: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.82);
+}
+.footer p { margin-bottom: 4px; }
+.footer a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.footer a:hover { text-decoration-color: var(--muted); }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+  .header { justify-content: center; padding: 12px; }
+  .nav { justify-content: center; }
+  .nav a { padding: 7px 12px; font-size: 14px; }
+  main { padding: 30px 16px; }
+  .hero { padding: 40px 0 30px; }
+  .profile-photo { width: 84px; height: 84px; }
+}
